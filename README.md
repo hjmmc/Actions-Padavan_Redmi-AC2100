@@ -3,10 +3,19 @@
 - Padavan源码是[MeIsReallyBa/padavan-4.4](https://github.com/MeIsReallyBa/padavan-4.4)。
 - Github Actions参考自[P3TERX/Actions-OpenWrt](https://github.com/P3TERX/Actions-OpenWrt)&[hanwckf/scut_padavan_build](https://github.com/hanwckf/scut_padavan_build)。
 - 编译目标为Redmi-AC2100
-- 默认登陆地址[192.168.5.1](http://192.168.5.1),登录名admin/admin
+- 默认登陆地址[192.168.123.1](http://192.168.123.1),登录名admin/admin
 
 ### Actions secrets配置
 - 有关`secrets.ACTIONS_REPO_PAT`请参阅[源码更新自动编译内容](https://p3terx.com/archives/build-openwrt-with-github-actions.html#toc_13)
+
+### 开启的功能
+
+- 基础功能: IPv6/HTTPS/DDNS/SSHD)
+- 内网穿透: FRPC
+- 科学上网: Xray/SS/SSR/Trojan)
+- DNS加速: SmartDNS
+- 广告过滤: AdByBy/AdGuardHome
+
 
 ### 防火墙ipv6配置参考
 - 关闭ipv6防火墙
