@@ -92,7 +92,7 @@ jobs:
       if: steps.compile.outputs.status == 'success' && env.UPLOAD_WETRANSFER == 'true' && !cancelled()
       run: |
        curl -fsSL git.io/file-transfer | sh
-       ./transfer wet -s -p 16 --no-progress /opt/rt-n56u/trunk/images 2>&1 | tee wetransfer.log
+       ./transfer wet -s -p 16 --no-progress /opt/images 2>&1 | tee wetransfer.log
        echo "::warning file=wetransfer.com::$(cat wetransfer.log | grep https)"
        echo "::set-output name=url::$(cat wetransfer.log | grep https | cut -f3 -d" ")"
 
@@ -106,8 +106,8 @@ jobs:
        echo "- Source code:" >> release.txt
        echo "  ${{ env.REPO_URL }}/tree/${{ env.REPO_BRANCH }}" >> release.txt
        echo "- ${{ env.TNAME }}.trx" >> release.txt
-       echo "  md5sum: $(md5sum /opt/rt-n56u/trunk/images/*.trx | cut -d" " -f1)" >> release.txt
-       echo "  sha256: $(sha256sum /opt/rt-n56u/trunk/images/*.trx | cut -d" " -f1)" >> release.txt
+       echo "  md5sum: $(md5sum /opt/images/*.trx | cut -d" " -f1)" >> release.txt
+       echo "  sha256: $(sha256sum /opt/images/*.trx | cut -d" " -f1)" >> release.txt
        [ $UPLOAD_WETRANSFER = true ] && echo "🔗 [WeTransfer](${{ steps.wetransfer.outputs.url }})" >> release.txt
        echo "::set-output name=status::success"
 
@@ -120,7 +120,7 @@ jobs:
        tag_name: ${{ steps.tag.outputs.release_tag }}
        body_path: release.txt
        files: |
-        /opt/rt-n56u/trunk/images/*.trx
+        /opt/images/*.trx
         /opt/rt-n56u/trunk/configs/templates/${{ env.TNAME }}.config
 
     - name: Delete workflow runs
