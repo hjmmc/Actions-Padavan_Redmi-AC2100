@@ -11,10 +11,8 @@
 ### 开启的功能
 
 - 基础功能: IPv6/HTTPS/DDNS/SSHD)
-- 内网穿透: FRPC
 - 科学上网: Xray/SS/SSR/Trojan)
 - DNS加速: SmartDNS
-- 广告过滤: AdByBy/AdGuardHome
 
 
 ### 防火墙ipv6配置参考
