@@ -1,5 +1,7 @@
 # Github Actions Padavan RM2100
 
+自动编译多个超频版本，不喜欢超频的可以使用未超频版本 880Mhz
+
 - Padavan源码是[MeIsReallyBa/padavan-4.4](https://github.com/MeIsReallyBa/padavan-4.4)。
 - Github Actions参考自[P3TERX/Actions-OpenWrt](https://github.com/P3TERX/Actions-OpenWrt)&[hanwckf/scut_padavan_build](https://github.com/hanwckf/scut_padavan_build)。
 - 编译目标为Redmi-AC2100
