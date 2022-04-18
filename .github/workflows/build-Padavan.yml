@@ -53,18 +53,39 @@ jobs:
       if: (!cancelled())
       id: compile
       run: |
+        sudo mkdir /opt/images/
+        sudo mkdir /opt/images/880
+        sudo mkdir /opt/images/1000
+        sudo mkdir /opt/images/1100
+        sudo mkdir /opt/images/1120
+        sudo mkdir /opt/images/1200
         cd /opt/rt-n56u/trunk
         cp -f configs/templates/$TNAME.config .config
-        sudo ./build_firmware_modify $TNAME 0 
-        echo "::set-output name=status::success"
+        sudo ./build_firmware_modify $TNAME 0
+        sudo mv -f images/*.trx /opt/images/880/
+        echo 'CONFIG_FIRMWARE_INCLUDE_OC=y' >> .config #编译超频版
+        echo 'CONFIG_FIRMWARE_MT7621_OC=0x312' >> .config #1000Mhz
+        sudo ./build_firmware_modify $TNAME 0        
+        sudo mv -f images/*.trx /opt/images/1000/
+        sed -i 's/CONFIG_FIRMWARE_MT7621_OC=0x312/CONFIG_FIRMWARE_MT7621_OC=0x362/g' .config #1100Mhz
+        sudo ./build_firmware_modify $TNAME 0
+        sudo mv -f images/*.trx /opt/images/1100/
+        sed -i 's/CONFIG_FIRMWARE_MT7621_OC=0x362/CONFIG_FIRMWARE_MT7621_OC=0x372/g' .config #1120Mhz
+        sudo ./build_firmware_modify $TNAME 0
+        sudo mv -f images/*.trx /opt/images/1120/
+        sed -i 's/CONFIG_FIRMWARE_MT7621_OC=0x372/CONFIG_FIRMWARE_MT7621_OC=0x3B2/g' .config #1200Mhz
+        sudo ./build_firmware_modify $TNAME 0
+        sudo mv -f images/*.trx /opt/images/1200/        
         echo "FILE_DATE=$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
+        echo "::set-output name=status::success"
+        
 
     - name: Upload firmware directory
       uses: actions/upload-artifact@main
       if: steps.compile.outputs.status == 'success' && !cancelled()
       with:
         name: Padavan_firmware_${{ env.TNAME }}_${{ env.FILE_DATE }}
-        path: /opt/rt-n56u/trunk/images
+        path: /opt/images
 
     - name: Upload firmware to WeTransfer
       id: wetransfer
